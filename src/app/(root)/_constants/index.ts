@@ -346,7 +346,7 @@ export const THEMES: Theme[] = [
 
 export const THEME_DEFINITONS = {
   "github-dark": {
-    base: "vs-dark",
+    name: "vs-dark",
     inherit: true,
     rules: [
       { token: "comment", foreground: "6e7681" },
@@ -370,7 +370,7 @@ export const THEME_DEFINITONS = {
     },
   },
   monokai: {
-    base: "vs-dark",
+    name: "vs-dark",
     inherit: true,
     rules: [
       { token: "comment", foreground: "75715E" },
@@ -394,7 +394,7 @@ export const THEME_DEFINITONS = {
     },
   },
   "solarized-dark": {
-    base: "vs-dark",
+    name: "vs-dark",
     inherit: true,
     rules: [
       { token: "comment", foreground: "586e75" },
@@ -423,7 +423,7 @@ export const THEME_DEFINITONS = {
 export const defineMonacoThemes = (monaco: Monaco) => {
   Object.entries(THEME_DEFINITONS).forEach(([themeName, themeData]) => {
     monaco.editor.defineTheme(themeName, {
-      base: themeData.base,
+      base: "hc-light",
       inherit: themeData.inherit,
       rules: themeData.rules.map((rule) => ({
         ...rule,

@@ -1,6 +1,6 @@
 import { CodeEditorState } from "@/types";
 import { create } from "zustand";
-import { Monaco } from "@monaco-editor/react";
+import type { editor as MonacoEditor } from "monaco-editor";
 import { LANGUAGE_CONFIG } from "@/app/(root)/_constants";
 
 const getInitialState = () => {
@@ -28,15 +28,15 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
 
   return {
     ...initialState,
-    output: null,
+    output: "", // was `null`, now string
     isRunning: false,
     error: null,
-    editor: null,
+    editor: null as MonacoEditor.IStandaloneCodeEditor | null,
     executionResult: null,
 
     getCode: () => get().editor?.getValue() || "",
 
-    setEditor: (editor: Monaco) => {
+    setEditor: (editor: MonacoEditor.IStandaloneCodeEditor) => {
       if (typeof window !== "undefined") {
         const savedCode = localStorage.getItem(`editor-code-${get().language}`);
         if (savedCode) editor?.setValue(savedCode);
@@ -108,7 +108,6 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
         }
 
         const data = await response.json();
-        console.log("data back from piston:", data);
 
         if (data.message) {
           set({

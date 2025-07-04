@@ -16,18 +16,18 @@ function SnippetCard({ snippet }: { snippet: Snippet }) {
   const { user } = useUser();
   const deleteSnippet = useMutation(api.snippets.deleteSnippet);
   const [isDeleting, setIsDeleting] = useState(false);
-const handleDelete = async () => {
-   setIsDeleting(true);
-   try {
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
       await deleteSnippet({ snippetId: snippet._id });
       toast.success("Snippet deleted successfully");
-   } catch (error) {
+    } catch (error) {
       toast.error("Error occurred while deleting the snippet");
-      console.log("Error occurred while deleting a snippet");
-   } finally {
+      console.log("Error occurred while deleting a snippet", error);
+    } finally {
       setIsDeleting(false);
-   }
-};
+    }
+  };
 
   return (
     <motion.div
@@ -116,7 +116,9 @@ const handleDelete = async () => {
                     <div className="p-1 rounded-md bg-gray-800/50">
                       <User className="size-3" />
                     </div>
-                    <span className="truncate max-w-[150px]">{snippet.userName}</span>
+                    <span className="truncate max-w-[150px]">
+                      {snippet.userName}
+                    </span>
                   </div>
                 </div>
               </div>
