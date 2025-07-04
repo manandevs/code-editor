@@ -6,12 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "convex": "convex dev"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.21.0",
     "@monaco-editor/react": "^4.7.0",
-    "convex": "^1.24.8",
     "framer-motion": "^12.17.3",
     "lucide-react": "^0.514.0",
     "monaco-editor": "^0.52.2",
@@ -29,6 +29,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "convex": "^1.25.2",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
