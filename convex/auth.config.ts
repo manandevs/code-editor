@@ -1,8 +1,8 @@
-
+// convex/auth.config.ts
 export default {
   providers: [
     {
-      domain: "https://sought-bull-96.clerk.accounts.dev",
+      domain: process.env.CLERK_JWT_ISSUER_DOMAIN,
       applicationID: "convex",
     },
   ],

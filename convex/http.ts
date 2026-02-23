@@ -1,3 +1,4 @@
+// convex/http.ts
 import { api, internal } from "./_generated/api";
 import { Webhook } from "svix";
 import { httpAction } from "./_generated/server";
@@ -23,8 +24,8 @@ http.route({
       return new Response("Missing required headers", { status: 400 });
     }
 
-    const payload = await request.json();
-    const body = JSON.stringify(payload);
+    // FIX: Retrieve the EXACT raw body for Svix signature verification
+    const body = await request.text();
 
     const wh = new Webhook(webhookSecret);
     let evt: WebhookEvent;
@@ -42,7 +43,8 @@ http.route({
 
     if (evt.type === "user.created") {
       const { id, email_addresses, first_name, last_name } = evt.data;
-      const email = email_addresses[0].email_address;
+      // FIX: Ensure safe navigation for email
+      const email = email_addresses[0]?.email_address;
       const name = `${first_name || ""} ${last_name || ""}`.trim();
 
       try {
@@ -60,6 +62,7 @@ http.route({
   }),
 });
 
+// LemonSqueezy route remains exactly as you had it
 http.route({
   path: "/lemonsqueezy-webhook",
   method: "POST",

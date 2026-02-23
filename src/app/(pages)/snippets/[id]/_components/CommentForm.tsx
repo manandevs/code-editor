@@ -1,3 +1,4 @@
+// src/app/(pages)/snippets/[id]/_components/CommentForm.tsx
 import { CodeIcon, SendIcon } from "lucide-react";
 import { useState } from "react";
 import CommentContent from "./CommentContent";
@@ -24,11 +25,8 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!comment.trim()) return;
-
     await onSubmit(comment);
-
     setComment("");
     setIsPreview(false);
   };
@@ -36,7 +34,6 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
   return (
     <form onSubmit={handleSubmit} className="mb-8">
       <div className="bg-[#0a0a0f] rounded-xl border border-[#ffffff0a] overflow-hidden">
-        {/* Comment form header */}
         <div className="flex justify-end gap-2 px-4 pt-2">
           <button
             type="button"
@@ -49,9 +46,9 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
           </button>
         </div>
 
-        {/* Comment form body */}
         {isPreview ? (
-          <div className="min-h-[120px] p-4 text-[#e1e1e3">
+          // FIX: Corrected malformed Tailwind syntax
+          <div className="min-h-[120px] p-4 text-[#e1e1e3]">
             <CommentContent content={comment} />
           </div>
         ) : (
@@ -65,7 +62,6 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
           />
         )}
 
-        {/* Comment Form Footer */}
         <div className="flex items-center justify-between gap-4 px-4 py-3 bg-[#080809] border-t border-[#ffffff0a]">
           <div className="hidden sm:block text-xs text-[#808086] space-y-1">
             <div className="flex items-center gap-2">

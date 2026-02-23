@@ -1,3 +1,4 @@
+// src/app/(pages)/snippets/[id]/_components/Comments.tsx
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { Id } from "../../../../../../convex/_generated/dataModel";
 import { useState } from "react";
@@ -11,7 +12,8 @@ import CommentForm from "./CommentForm";
 function Comments({ snippetId }: { snippetId: Id<"snippets"> }) {
   const { user } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [deletinCommentId, setDeletingCommentId] = useState<string | null>(null);
+  // FIX: Enforce correct Id<"snippetComments"> TS type typing
+  const [deletinCommentId, setDeletingCommentId] = useState<Id<"snippetComments"> | null>(null);
 
   const comments = useQuery(api.snippets.getComments, { snippentId: snippetId }) || [];
   const addComment = useMutation(api.snippets.addComment);
@@ -19,7 +21,6 @@ function Comments({ snippetId }: { snippetId: Id<"snippets"> }) {
 
   const handleSubmitComment = async (content: string) => {
     setIsSubmitting(true);
-
     try {
       await addComment({ snippetId, content });
     } catch (error) {
@@ -32,7 +33,6 @@ function Comments({ snippetId }: { snippetId: Id<"snippets"> }) {
 
   const handleDeleteComment = async (commentId: Id<"snippetComments">) => {
     setDeletingCommentId(commentId);
-
     try {
       await deleteComment({ commentId });
     } catch (error) {

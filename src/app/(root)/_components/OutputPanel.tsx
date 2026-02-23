@@ -1,12 +1,7 @@
+// src/app/(root)/_components/OutputPanel.tsx
 "use client";
 import { useCodeEditorStore } from "@/store/useStoreEditorStore";
-import {
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  Copy,
-  Terminal,
-} from "lucide-react";
+import { AlertTriangle, CheckCircle, Clock, Copy, Terminal } from "lucide-react";
 import React, { useState } from "react";
 import RunningCodeSkeleton from "./RunningCodeSkeleton";
 
@@ -18,8 +13,12 @@ function OutputPanel() {
 
   const handleCopy = async () => {
     if (!hasContent) return;
-
-    await navigator.clipboard.writeText(error || output || "");
+    // FIX: Safely parse potential non-string error payloads before copying
+    const textToCopy = error 
+      ? (typeof error === "string" ? error : JSON.stringify(error, null, 2)) 
+      : output || "";
+      
+    await navigator.clipboard.writeText(textToCopy);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
   };
@@ -66,8 +65,9 @@ function OutputPanel() {
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-1" />
               <div className="space-y-1">
                 <div className="font-medium">Execution Error</div>
+                {/* FIX: Prevent React crashes if the execution error payload is an object */}
                 <pre className="whitespace-pre-wrap text-red-400/80">
-                  {error}
+                  {typeof error === "string" ? error : JSON.stringify(error, null, 2)}
                 </pre>
               </div>
             </div>
